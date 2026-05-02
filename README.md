@@ -111,7 +111,7 @@ def MAX_PAGES          = null  // e.g. 50 for a quick sample, or null for no lim
 ---
 
 ## Example output
-![Audit script output showing per-space nested macro findings](docs/audit-script-output.png)
+
 
 ### Foundation script (`01`)
 
@@ -138,6 +138,8 @@ The audit script returns a styled HTML table rendered directly in the Script Con
 - **Clickable links** — view the page or jump straight into edit mode
 - **Macro title** — if the author labelled their macro (e.g. an expand titled "Deployment steps"), that label is shown so you can Ctrl+F for it on the page
 - **Guidance column** — a suggested first step for each finding, based on macro type
+
+![Audit script output showing per-space nested macro findings](docs/audit-script-output.png)
 
 See [`docs/how-it-works.md`](docs/how-it-works.md) for a full explanation of what each column means and how the detection works.
 
