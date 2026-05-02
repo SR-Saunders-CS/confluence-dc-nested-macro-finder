@@ -111,6 +111,7 @@ def MAX_PAGES          = null  // e.g. 50 for a quick sample, or null for no lim
 ---
 
 ## Example output
+![Audit script output showing per-space nested macro findings](docs/audit-script-output.png)
 
 ### Foundation script (`01`)
 
