@@ -1,5 +1,8 @@
 # Confluence DC — Nested Macro Finder
 
+> ℹ️ **Always test in staging first.** Before running these scripts against production, run them on a staging instance that mirrors prod as closely as possible — same Confluence version, same ScriptRunner version, same apps installed, and ideally a recent copy of production data. The scripts are read-only, but the Script Console is a powerful tool and a staging dry run is the right habit for *anything* you run there.
+ 
+
 ## What is this for?
 
 If you run **Confluence Data Center** and you're planning to move to **Confluence Cloud**, some of your pages will break in ways that aren't obvious until after you've migrated. This repository helps you find those pages *before* you migrate, so you can fix them in advance.
