@@ -1,7 +1,8 @@
 # Confluence DC — Nested Macro Finder
 
 > ℹ️ **Always test in staging first.** Before running these scripts against production, run them on a staging instance that mirrors prod as closely as possible — same Confluence version, same ScriptRunner version, same apps installed, and ideally a recent copy of production data. The scripts are read-only, but the Script Console is a powerful tool and a staging dry run is the right habit for *anything* you run there.
- 
+
+ > ℹ️ **This is a community proof-of-concept shared by an Adaptavist CSM. It is not an Adaptavist product and is not covered by ScriptRunner support. Issues and PRs welcome on GitHub.
 
 ## What is this for?
 
