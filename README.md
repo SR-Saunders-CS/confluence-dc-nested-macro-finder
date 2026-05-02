@@ -1,8 +1,26 @@
 # Confluence DC — Nested Macro Finder
 
-> **Nested macros are one of the most common silent causes of page degradation after a Confluence Cloud migration.** Pages migrate successfully, but render incorrectly or get quarantined inside a "Legacy Content Macro" wrapper when Confluence Cloud's editor tries to open them. The legacy editor that tolerates the old structure is being deprecated by Atlassian in 2026 — so this is a time-bound problem, not optional housekeeping.
+## What is this for?
+
+If you run **Confluence Data Center** and you're planning to move to **Confluence Cloud**, some of your pages will break in ways that aren't obvious until after you've migrated. This repository helps you find those pages *before* you migrate, so you can fix them in advance.
+
+## Who is this for?
+
+You'll get the most out of this if you're a **Confluence administrator** or a **migration consultant**. If you're neither, the relevant person on your team is probably whoever manages your Confluence instance — send them this link.
+
+## A 30-second primer (skip if you're a Confluence admin)
+
+- **A macro** is a content block you drop into a Confluence page. Common examples: an info banner, an expand/collapse, a table of contents, a status lozenge.
+- **Nesting** means putting one macro inside another — for example, an info banner *inside* an expand block.
+- **Why this matters for migration:** Confluence Cloud's modern editor doesn't support arbitrary macro nesting. When a nested macro hits Cloud, it either renders incorrectly or gets locked into a **Legacy Content Macro** — a read-only fallback that Cloud uses when it can't render old content properly. It works today, but Atlassian is deprecating it in 2026.
+
+That's the whole problem in one paragraph. The rest of this README explains how the scripts find those pages.
+
+---
+
+> **Nested macros are one of the most common silent causes of page degradation after a Confluence Cloud migration.** Pages migrate successfully, but render incorrectly or get quarantined inside a Legacy Content Macro wrapper when Cloud's editor tries to open them. The legacy editor that tolerates the old structure is being deprecated by Atlassian in 2026 — so this is a time-bound problem, not optional housekeeping.
 >
-> There is no native Confluence feature that surfaces this. This repository gives you two ScriptRunner scripts that do.
+> There is no native Confluence feature that surfaces this. This repository gives you two **ScriptRunner** scripts that do. (ScriptRunner is an Adaptavist app for Confluence that lets administrators run custom Groovy scripts against the instance.)
 
 ---
 
@@ -22,11 +40,12 @@ The suggestions in the output are based on macro type and nesting pattern. They 
 | `02-migration-audit.groovy` | ~700 lines. The same idea, extended with HTML output, remediation hints, blog post scanning, third-party macro detection, and more. | Use this for real migration prep once you understand the foundation. |
 
 These two scripts are the same concept at two levels of detail. The foundation teaches you the approach. The audit script shows you what that approach looks like when built out and extended (and this can be taken further with ScriptRunner).
+
 ---
 
-## The problem, briefly
+## The problem, in detail
 
-Confluence stores page content as XML. Every macro on a page is an `<ac:structured-macro>` element. When one macro contains another inside its `<ac:rich-text-body>`, that is nesting:
+Confluence stores page content as **XML** (a structured text format). Every macro on a page is an `<ac:structured-macro>` element. When one macro contains another inside its `<ac:rich-text-body>` (the macro's body content), that is nesting:
 
 ```xml
 <ac:structured-macro ac:name="expand">
@@ -42,16 +61,23 @@ Confluence stores page content as XML. Every macro on a page is an `<ac:structur
 
 Confluence Cloud's modern editor does not support arbitrary macro nesting. When it encounters this pattern, it either renders the page incorrectly or wraps the content in a Legacy Content Macro — a read-only fallback that will stop working when the legacy editor is deprecated.
 
-CQL (`macro = "expand"`) can find pages that *use* a macro. The Admin → Macro Usage report shows instance-wide counts. Neither can detect *nesting*. That is the gap these scripts fill.
+**Why existing tools don't solve this:**
+
+- **CQL** (Confluence Query Language, Confluence's built-in search syntax) can find pages that *use* a macro — e.g. `macro = "expand"` — but cannot detect whether macros are nested inside each other.
+- **Admin → Macro Usage report** shows instance-wide counts of each macro, but again, no nesting information.
+
+That is the gap these scripts fill.
 
 ---
 
 ## Quick start
 
 ### What you need
-- Confluence Data Center with **ScriptRunner** installed
-- Confluence administrator access
+- Confluence **Data Center** (the self-hosted enterprise version) with **ScriptRunner** installed
+- Confluence **administrator** access (you can't use the Script Console without it)
 - A space key to test against (start small — don't scan your whole instance first)
+
+> A **space key** is the short identifier for a Confluence space, e.g. `DEV` or `HR`. You can see it in the URL when you're inside a space.
 
 ### Running a script
 
@@ -134,7 +160,7 @@ Both scripts scan **current published page bodies** only.
 
 ### What the scripts do not detect
 
-- Macros inside `<ac:plain-text-body>` (e.g. code blocks) — impossible by definition, CDATA content is not parsed
+- Macros inside `<ac:plain-text-body>` (e.g. code blocks) — impossible by definition, the content inside isn't parsed as XML
 - Macros inside top-level table cells where the table is not inside a macro body — not nesting
 - Every possible marketplace macro — the third-party heuristic uses a naming convention, not a registry
 
