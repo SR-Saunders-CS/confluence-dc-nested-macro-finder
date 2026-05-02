@@ -1,7 +1,4 @@
-# confluence-dc-nested-macro-finder
-Pre-migration audit script for Confluence DC → Cloud. Detects nested macros that render incorrectly in Cloud's modern editor, before they become a post-migration problem. Built for the ScriptRunner Script Console.
-
-
+# Confluence DC — Nested Macro Finder
 
 > **Nested macros are one of the most common silent causes of page degradation after a Confluence Cloud migration.** Pages migrate successfully, but render incorrectly or get quarantined inside a "Legacy Content Macro" wrapper when Confluence Cloud's editor tries to open them. The legacy editor that tolerates the old structure is being deprecated by Atlassian in 2026 — so this is a time-bound problem, not optional housekeeping.
 >
@@ -112,7 +109,7 @@ The audit script returns a styled HTML table rendered directly in the Script Con
 - **Macro title** — if the author labelled their macro (e.g. an expand titled "Deployment steps"), that label is shown so you can Ctrl+F for it on the page
 - **Guidance column** — a suggested first step for each finding, based on macro type
 
-See [`docs/example-output.md`](docs/example-output.md) for a full walkthrough of what each column means.
+See [`docs/how-it-works.md`](docs/how-it-works.md) for a full explanation of what each column means and how the detection works.
 
 ---
 
@@ -160,16 +157,13 @@ Both scripts scan **current published page bodies** only.
 
 ```
 confluence-dc-nested-macro-finder/
-├── README.md                  ← You are here
-├── LICENSE                    ← MIT
-├── .gitignore
-├── scripts/
-│   ├── 01-foundation.groovy   ← Simple, readable, ~100 lines
-│   └── 02-migration-audit.groovy  ← Full-featured, HTML output, ~700 lines
+├── LICENSE
+├── README.md
 ├── docs/
-│   ├── how-it-works.md        ← How the XML detection works
-│   └── example-output.md      ← Annotated walkthrough of the audit output
-└── CHANGELOG.md
+│   └── how-it-works.md        ← How the XML detection works
+└── scripts/
+    ├── 01-foundation.groovy   ← Simple, readable, ~100 lines
+    └── 02-migration-audit.groovy  ← Full-featured, HTML output
 ```
 
 ---
