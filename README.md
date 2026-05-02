@@ -21,8 +21,7 @@ The suggestions in the output are based on macro type and nesting pattern. They 
 | `01-foundation.groovy` | ~100 lines. The core idea, nothing more. Plain text output. | Start here. Read it. Understand how the detection works before running anything on a real instance. |
 | `02-migration-audit.groovy` | ~700 lines. The same idea, extended with HTML output, remediation hints, blog post scanning, third-party macro detection, and more. | Use this for real migration prep once you understand the foundation. |
 
-These are not a free trial and a paid version. They are the same concept at two levels of detail. The foundation teaches you the approach. The audit script shows you what that approach looks like when built out for a real customer engagement.
-
+These two scripts are the same concept at two levels of detail. The foundation teaches you the approach. The audit script shows you what that approach looks like when built out and extended (and this can be taken further with ScriptRunner).
 ---
 
 ## The problem, briefly
