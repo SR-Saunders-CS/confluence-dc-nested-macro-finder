@@ -27,7 +27,7 @@ import com.atlassian.spring.container.ContainerManager
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── CONFIGURATION ─────────────────────────────────────────────────────────────
-// Set SPACE_KEY to scan a single space, or null to scan all spaces. In the below example the space key is "NES", change to your own.
+// Set SPACE_KEY to scan a single space, or null to scan all spaces.
 // ─────────────────────────────────────────────────────────────────────────────
 def SPACE_KEY = "NES"
 
@@ -140,4 +140,7 @@ findings.groupBy { it.space }.each { spaceKey, spaceFindings ->
     }
 }
 
-return report.toString()
+// Wrap in <pre> so the Script Console preserves newlines and spacing.
+// Without this, the console renders plain text as HTML and collapses
+// all whitespace into a single line.
+return "<pre>${report.toString()}</pre>"
